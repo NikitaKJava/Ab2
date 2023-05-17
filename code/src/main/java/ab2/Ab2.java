@@ -3,7 +3,7 @@ package ab2;
 public interface Ab2
 {
     /**
-     * Lierfert eine HashMap-Implementierung mit linearer Sondierungsstrategie.
+     * Liefert eine HashMap-Implementierung mit linearer Sondierungsstrategie.
      * Die Hashtabelle soll mindestens minSize Elemente aufnehmen können.
      *
      * @param minSize Anzahl an Elementen, die gespeichert werden können müssen

@@ -1,4 +1,4 @@
-package ab2.impl.Nachnamen;
+package ab2.impl.BerishajVojticekKozlov;
 
 import ab2.Ab2;
 
@@ -9,7 +9,7 @@ public class Ab2Impl implements Ab2 {
 	@Override
 	public <K, V> AlgoDatHashMap<K, V> newHashMapLinear(int minSize) {
 		// TODO Auto-generated method stub
-		return null;
+		return HashMap.linear();
 	}
 
 	@Override
@@ -27,6 +27,6 @@ public class Ab2Impl implements Ab2 {
 	@Override
 	public int quickselectMax(int[] data, int i) {
 		// TODO Auto-generated method stub
-		return -1;
+		return QuickSelect.quickselectMax(data,i);
 	}
 }

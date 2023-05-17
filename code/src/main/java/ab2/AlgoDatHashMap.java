@@ -34,7 +34,7 @@ public interface AlgoDatHashMap<K, V> {
 
 	/**
 	 * Liefert den Wert zu dem angegebenen Schlüssel. Ist der Schlüssel nicht
-	 * vorhanden, ist null zurück zu geben.
+	 * vorhanden, ist null zurück zu geben.6
 	 * 
 	 * @param key
 	 *            der zu suchende Schlüssel

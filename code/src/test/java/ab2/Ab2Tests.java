@@ -1,6 +1,6 @@
 package ab2;
 
-import ab2.impl.Nachnamen.Ab2Impl;
+import ab2.impl.BerishajVojticekKozlov.Ab2Impl;
 import ab2.AlgoDatHashMap;
 
 import org.junit.jupiter.api.AfterAll;
