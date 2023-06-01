@@ -9,7 +9,8 @@ public class Ab2Impl implements Ab2 {
 	@Override
 	public <K, V> AlgoDatHashMap<K, V> newHashMapLinear(int minSize) {
 		// TODO Auto-generated method stub
-		return HashMap.linear();
+		return null;
+//		return HashMap.linear(minSize);
 	}
 
 	@Override
