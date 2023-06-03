@@ -8,13 +8,13 @@ public class QuickSelect {
             throw new IllegalArgumentException("Array cannot be empty or null.");
         }
 
-        if (i < 1 || i > data.length) {
-            throw new IllegalArgumentException("Der Idex liegt außerhalb des gültigen Bereichs");
+        if (i < 0 || i > data.length) {
+            throw new IllegalArgumentException("Der Index liegt außerhalb des gültigen Bereichs");
         }
         return quickselectMax(data, 0, data.length - 1, i);
     }
 
-        private int quickselectMax(int[] data, int low, int high, int i) {
+        private static int quickselectMax(int[] data, int low, int high, int i) {
             if (low == high) {
                 return data[low];
             }
@@ -31,7 +31,7 @@ public class QuickSelect {
             }
         }
 
-        private int getPivotIndex(int[] data, int low, int high){
+        private static int getPivotIndex(int[] data, int low, int high){
                 if (high - low < 5) {
                     return partition(data, low, high);
                 }
@@ -48,7 +48,7 @@ public class QuickSelect {
                 return quickselectMax(medians, 0, numMedians - 1, numMedians / 2);
             }
 
-            private int partition(int[] data, int low, int high){
+            private static int partition(int[] data, int low, int high){
                 int pivot = data[high];
                 int i = low -1;
 
@@ -63,7 +63,7 @@ public class QuickSelect {
                 return i+1;
             }
 
-    private void swap(int[] data,int i, int j) {
+    private static void swap(int[] data, int i, int j) {
                 int temp = data[i];
                 data[i] = data[j];
                 data[j] = temp;

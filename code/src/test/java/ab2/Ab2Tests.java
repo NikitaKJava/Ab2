@@ -101,10 +101,10 @@ public class Ab2Tests {
                 // kopiere das Array, sortiere es und bestimme den Median (das length/2-größte Element)
                 int[] data_sorted = Arrays.copyOf(data, data.length);
                 Arrays.sort(data_sorted);
-                int median_expected = data_sorted[data_sorted.length / 2 + 1];
+                int median_expected = data_sorted[data_sorted.length / 2];
 
                 // bestimme den berechneten Wert laut Implementierung
-                int median = ab2Impl.quickselectMax(data, data.length / 2);
+                int median = ab2Impl.quickselectMax(data, (data.length + 1) / 2);
 
                 assertEquals(median_expected, median);
             }
@@ -119,8 +119,8 @@ public class Ab2Tests {
 
     private void checkFullMap(AlgoDatHashMap<Integer, String> hashMap) {
         for(int i = 0; i < hashMap.capacity(); i++) {
-            hashMap.put(i, i+"");
             assertFalse(hashMap.isFull());
+            hashMap.put(i, i+"");
         }
 
         assertTrue(hashMap.isFull());
