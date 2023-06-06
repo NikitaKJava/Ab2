@@ -36,7 +36,10 @@ public class Main {
 //        System.out.println(Math.abs(hash % 12));
 //        System.out.println(quadraticProbing(hash,step));
 //        for (int i = 0; i < hm.capacity(); i++) {
-        System.out.println(hash % 12);
+        for (int i = 0; i < 10; i++) {
+            System.out.println((int) Math.floor(Math.random() * 3) + 1);
+        }
+
 //            System.out.println(hm.get(i));
 //            System.out.println(i + ": " + rand.nextInt(12));
 //        }
@@ -94,5 +97,9 @@ public class Main {
 
     public static int quadraticProbing(int hash, int step) {
         return floorMod(hash - (int) (Math.pow((int) Math.ceil((double) step/2),2.0) * (Math.pow((double)-1, (double) step))), 12);
+    }
+
+    private static int randomPivot(int left, int right) {
+        return left + (int) Math.floor(Math.random() * (right - left + 1));
     }
 }

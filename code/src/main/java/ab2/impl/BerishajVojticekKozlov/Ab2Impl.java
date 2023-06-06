@@ -30,6 +30,6 @@ public class Ab2Impl implements Ab2 {
 	@Override
 	public int quickselectMax(int[] data, int i) {
 		// TODO Auto-generated method stub
-		return QuickSelect.quickselectMax(data,i);
+		return QuickSelect.quickSelect(data,i);
 	}
 }

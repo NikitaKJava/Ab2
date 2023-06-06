@@ -11,11 +11,11 @@ import static java.lang.Math.floorMod;
  */
 public class Double<K, V> extends AlgoDatHashMap<K, V> {
 
-    private final int nextLowerPrime;
+    private final int nextSmallerPrime;
 
     public Double(int capacity) {
         super(capacity);
-        nextLowerPrime = nextLowerPrime(capacity);
+        nextSmallerPrime = nextLowerPrime(capacity);
     }
 
     /**
@@ -51,7 +51,7 @@ public class Double<K, V> extends AlgoDatHashMap<K, V> {
         // p' = next smaller prime number
         // h'(k) = 1 + (k * mod(p'))
         // floorMod -> index inside hashmap size
-        return floorMod((1 + (hash(key))), nextLowerPrime);
+        return floorMod((1 + (hash(key))), nextSmallerPrime);
     }
 
     /**
