@@ -1,26 +1,15 @@
 package ab2.impl.BerishajVojticekKozlov;
 
-import ab2.AlgoDatHashMap;
-
-import java.util.Arrays;
-import java.util.Random;
-
 class Entry<K, V> {
     private final K key;
     private V value;
     private Entry<K, V> next;
 
-    public Entry(K key, V value) {
+    Entry(K key, V value) {
         this.key = key;
         this.value = value;
         this.next = null;
     }
-
-//    Entry(K key, V value, Entry<K, V> next) {
-//        this.key = key;
-//        this.value = value;
-//        this.next = next;
-//    }
 
     public K getKey() {
         return key;
@@ -34,7 +23,7 @@ class Entry<K, V> {
         this.value = value;
     }
 
-    public Entry<K,V> getNext() {
+    public Entry<K, V> getNext() {
         return next;
     }
 
@@ -43,32 +32,29 @@ class Entry<K, V> {
     }
 }
 
-/**
- * Creates new array
- * @param <K>
- * @param <V>
- */
-public class HashMap<K,V> implements AlgoDatHashMap<K,V> {
-    private static int SIZE;
-    private static int CAPACITY;
-    private Entry<K, V>[] entries;
+public class AlgoDatHashMap<K, V> implements ab2.AlgoDatHashMap<K, V> {
+    int SIZE; // stored values
+    int CAPACITY; // capacity of the Hashmap
+    Entry<K, V>[] entries;
 
     /**
      * Constructor for HashMap with entries array
      *
      * @param capacity size of an array
      */
-    public HashMap(int capacity) {
+    @SuppressWarnings("unchecked")
+    public AlgoDatHashMap(int capacity) {
         CAPACITY = capacity;
-        this.entries = new Entry[CAPACITY];
+        entries = (Entry<K, V>[]) new Entry[CAPACITY];
         SIZE = 0;
     }
 
-    private int hash(K key) {
-        return Math.abs(key.hashCode() % entries.length);
+    protected int hash(K key) {
+        return key.hashCode() % CAPACITY;
     }
 
-    private void resize() {
+    @SuppressWarnings("unchecked")
+    void resize() {
         Entry<K, V>[] oldEntries = entries;
         entries = new Entry[oldEntries.length * 2];
         SIZE = 0;
@@ -85,7 +71,7 @@ public class HashMap<K,V> implements AlgoDatHashMap<K,V> {
      */
     @Override
     public void clear() {
-
+        entries = null;
     }
 
     /**
@@ -111,11 +97,11 @@ public class HashMap<K,V> implements AlgoDatHashMap<K,V> {
 
     /**
      * Liefert den Wert zu dem angegebenen Schlüssel. Ist der Schlüssel nicht
-     * vorhanden, ist null zurück zu geben.6
+     * vorhanden, ist null zurückzugeben.
      *
      * @param key der zu suchende Schlüssel
      * @return Wert, der mit dem Schlüssel assoziiert ist. Ist der Schlüssel
-     * nicht vorhanden, wird null zurück gegeben.
+     * nicht vorhanden, wird null zurückgegeben.
      */
     @Override
     public V get(K key) {
@@ -154,9 +140,10 @@ public class HashMap<K,V> implements AlgoDatHashMap<K,V> {
      *
      * @return die in der Hashtabelle gespeicherten Schlüssel
      */
+    @SuppressWarnings("unchecked")
     @Override
     public K[] keys() {
-        K[] keysArray = (K[]) new Object[CAPACITY];
+        K[] keysArray = (K[]) new Object[SIZE];
         int index = 0;
 
         for (Entry<K, V> entry : entries) {
@@ -172,15 +159,15 @@ public class HashMap<K,V> implements AlgoDatHashMap<K,V> {
 
     /**
      * Fügt einen Wert mit dem angegebenen Schlüssel in die Hashtabelle ein. Ein
-     * bereits bestehendes Element mit dem selben Schlüssel (equals-Methode!) wird
+     * bereits bestehendes Element mit demselben Schlüssel (equals-Methode!) wird
      * dabei überschrieben und zurückgegeben.
      *
      * @param key   der einzufügende Schlüssel
-     * @param value der einzufülgende Wert
+     * @param value der einzufügende Wert
      * @return null, wenn unter dem Schlüssel noch kein Wert eingefügt war.
      * Liefert das bisher gespeicherte Element, wenn mit dem Key schon
      * ein Wert vorhanden war.
-     * @throws IllegalStateException Wenn kein freier Platz mehr in der Hashtabelle vorhanden ist
+     * @throws IllegalStateException, wenn kein freier Platz mehr in der Hashtabelle vorhanden ist
      */
     @Override
     public V put(K key, V value) throws IllegalStateException {
@@ -189,18 +176,18 @@ public class HashMap<K,V> implements AlgoDatHashMap<K,V> {
         }
         int index = hash(key);
 
-        if (entries[index] == null) { // if Node null (empty), insert value
+        if (entries[index] == null) { // if hash index is null (no kollision), insert new Node
             entries[index] = new Entry<>(key, value);
             SIZE++;
             return null;
         } else { // if not, create new entry
             Entry<K, V> current = entries[index];
-            while (current != null) { // if key not null, check for right index
-                if (current.getKey().equals(key)) {
+            while (current != null) { // if Node not null
+                if (current.getKey().equals(key) && current.getValue().equals(value)) { // if element exists with same key, it will be overridden
                     current.setValue(value);
                     return null;
                 }
-                current = current.getNext(); // if not the right index, create next Node
+                current = current.getNext(); // get next Node and check keys and values
             }
             // if next Node is null, create and put new key and value
             Entry<K, V> newEntry = new Entry<>(key, value);
@@ -208,10 +195,6 @@ public class HashMap<K,V> implements AlgoDatHashMap<K,V> {
             entries[index] = newEntry;
         }
         SIZE++;
-
-        if (SIZE >= entries.length * 0.75) {
-            resize();
-        }
         return null;
     }
 
@@ -240,6 +223,7 @@ public class HashMap<K,V> implements AlgoDatHashMap<K,V> {
      *
      * @return Sammlung der in der Hashtabelle enthaltenen Werte
      */
+    @SuppressWarnings("unchecked")
     @Override
     public V[] values() {
         V[] valuesArray = (V[]) new Object[SIZE];
@@ -248,7 +232,9 @@ public class HashMap<K,V> implements AlgoDatHashMap<K,V> {
         for (Entry<K, V> entry : entries) {
             Entry<K, V> current = entry;
             while (current != null) {
-                valuesArray[index] = current.getValue();
+                if (current.getValue() != null) {
+                    valuesArray[index] = current.getValue();
+                }
                 current = current.getNext();
                 index++;
             }
@@ -256,48 +242,30 @@ public class HashMap<K,V> implements AlgoDatHashMap<K,V> {
         return valuesArray;
     }
 
-//    public static <V, K> HashMap<K, V> linear(int minSize) {
-//        HashMap<K, V>[] hashMap = new HashMap[minSize];
-//        int index = 0;
-//
-//        for (HashMap<K, V> entry : hashMap) {
-//
-//            index++;
-//
-//        }
-//
-////        return hashMap;
-//        return null;
-//    }
-
-
-
-    public static void main(String[] args) {
-        AlgoDatHashMap<Integer, String> hm = new HashMap<>(12);
-//        checkFullMap(hm);
-//        printing(hm);
-//        System.out.println("It's full?: " + hm.isFull());
-
-        Random rand = new Random(System.currentTimeMillis());
-
-//        hm.put(0, "1");
-        int keyk = rand.nextInt(hm.capacity());
-
-//        System.out.println(Arrays.toString(hm.values()));
-        System.out.println(keyk);
-    }
-
-    public static void checkFullMap(AlgoDatHashMap<Integer, String> hashMap) {
-        char c = 'A';
-        for(int i = 0; i < hashMap.capacity(); i++) {
-            hashMap.put(i, i + String.valueOf(c));
-            c++;
+    protected static boolean isPrime(int num) {
+        if (num < 2) {
+            return false;
         }
-    }
-
-    public static void printing(AlgoDatHashMap<Integer, String> hashMap) {
-        for (int i = 0; i < hashMap.capacity(); i++) {
-            System.out.print("KEY: " + i + ", VALUE: " + hashMap.get(i) + ", ");
+        for (int i = 2; i <= Math.sqrt(num); i++) {
+            if (num % i == 0) {
+                return false;
+            }
         }
+        return true;
+    }
+    // p = 4 * n + 3 (OR p % 4 = 3)
+    protected static boolean isPrimeQuadratic(int num) {
+        if (num < 2) {
+            return false;
+        }
+        if (num % 2 == 0 || num % 3 == 0) {
+            return false;
+        }
+        for (int i = 2; i < num; i ++) {
+            if (num % 4 == 3) {
+                return true;
+            }
+        }
+        return false;
     }
 }

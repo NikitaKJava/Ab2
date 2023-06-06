@@ -2,27 +2,29 @@ package ab2.impl.BerishajVojticekKozlov;
 
 import ab2.Ab2;
 
-import ab2.AlgoDatHashMap;
+import static ab2.impl.BerishajVojticekKozlov.Quadratic.getValidCapacityQuadratic;
+import static ab2.impl.BerishajVojticekKozlov.Double.getValidCapacity;
 
 public class Ab2Impl implements Ab2 {
 
 	@Override
-	public <K, V> AlgoDatHashMap<K, V> newHashMapLinear(int minSize) {
+	public <K, V> ab2.AlgoDatHashMap<K, V> newHashMapLinear(int minSize) {
 		// TODO Auto-generated method stub
-		return null;
-//		return HashMap.linear(minSize);
+		return new Linear<>(minSize + 1);
 	}
 
 	@Override
-	public <K, V> AlgoDatHashMap<K, V> newHashMapQuadratic(int minSize) {
+	public <K, V> ab2.AlgoDatHashMap<K, V> newHashMapQuadratic(int minSize) {
 		// TODO Auto-generated method stub
-		return null;
+		minSize = getValidCapacityQuadratic( minSize + 1);
+		return new Quadratic<>(minSize);
 	}
 
 	@Override
-	public <K, V> AlgoDatHashMap<K, V> newHashMapDouble(int minSize) {
+	public <K, V> ab2.AlgoDatHashMap<K, V> newHashMapDouble(int minSize) {
 		// TODO Auto-generated method stub
-		return null;
+		minSize = getValidCapacity(minSize + 1);
+		return new Double<>(minSize);
 	}
 
 	@Override

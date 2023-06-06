@@ -13,7 +13,7 @@ public interface Ab2
     public <K, V> AlgoDatHashMap<K, V> newHashMapLinear(int minSize);
 
     /**
-     * Liefert eine HashMap-Implementierung mit qudratischer
+     * Liefert eine HashMap-Implementierung mit quadratischer
      * Sondierungsstrategie. Die Hashtabelle soll mindestens minSize Elemente
      * aufnehmen können. Achten Sie darauf, dass beim quadratischen Sondieren
      * nur bei einer Primzahl p = 4n + 3 garantiert ist, dass das

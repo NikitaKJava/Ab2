@@ -34,12 +34,12 @@ public interface AlgoDatHashMap<K, V> {
 
 	/**
 	 * Liefert den Wert zu dem angegebenen Schlüssel. Ist der Schlüssel nicht
-	 * vorhanden, ist null zurück zu geben.6
+	 * vorhanden, ist null zurückzugeben.
 	 * 
 	 * @param key
 	 *            der zu suchende Schlüssel
 	 * @return Wert, der mit dem Schlüssel assoziiert ist. Ist der Schlüssel
-	 *         nicht vorhanden, wird null zurück gegeben.
+	 *         nicht vorhanden, wird null zurückgegeben.
 	 */
 	public V get(K key);
 
